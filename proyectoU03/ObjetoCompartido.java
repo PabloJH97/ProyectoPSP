@@ -114,57 +114,77 @@ public class ObjetoCompartido {
 	}
 
 	public String traducir() {
+		boolean palabraCorrecta=false;
+		boolean idiomaCorrecto=false;
+		int indice=0;
 		if (!palabra.equals("salir")) {
 			for (int i = 0; i < this.getPalabrasTraducibles().length && !this.haTraducido; i++) {
 				if (palabra.equals(getPalabrasTraducibles()[i])) {
-					for (int j = 0; j < this.idioma.length && !this.haTraducido; j++) {
-						if (this.idiomaATraducir.equals(this.idioma[j])) {
-							switch (this.idioma[j]) {
-							case "Frances":
-								for (int z = 0; j < this.traduccionFrances.length && !this.haTraducido; z++) {
-									if (i == z) {
-										this.traduccion = this.traduccionFrances[z];
-										this.haTraducido = true;
-									}
-
+					palabraCorrecta=true;
+				}
+			}
+			if(palabraCorrecta) {
+				for(int y=0; y<this.palabrasTraducibles.length; y++) {
+					if(this.palabra.equals(this.palabrasTraducibles[y])) {
+						indice=y;
+					}
+				}
+				for (int j = 0; j < this.idioma.length && !this.haTraducido; j++) {
+					if (this.idiomaATraducir.equals(this.idioma[j])) {
+						idiomaCorrecto=true;
+						switch (this.idioma[j]) {
+						case "Frances":
+							for (int z = 0; z < this.traduccionFrances.length && !this.haTraducido; z++) {
+								if (z==indice) {
+									this.traduccion = this.traduccionFrances[z];
+									this.haTraducido = true;
 								}
-								break;
-							case "Ingles":
-								for (int z = 0; j < this.traduccionIngles.length && !this.haTraducido; z++) {
-									if (i == z) {
-										this.traduccion = this.traduccionIngles[z];
-										this.haTraducido = true;
-									}
 
-								}
-								break;
-							case "Aleman":
-								for (int z = 0; j < this.traduccionAleman.length && !this.haTraducido; z++) {
-									if (i == z) {
-										this.traduccion = this.traduccionAleman[z];
-										this.haTraducido = true;
-									}
-
-								}
-								break;
-							case "Ruso":
-								for (int z = 0; j < this.traduccionRuso.length && !this.haTraducido; z++) {
-									if (i == z) {
-										this.traduccion = this.traduccionRuso[z];
-										this.haTraducido = true;
-									}
-
-								}
-								break;
 							}
+							break;
+						case "Ingles":
+							for (int z = 0; z < this.traduccionIngles.length && !this.haTraducido; z++) {
+								if (z==indice) {
+									this.traduccion = this.traduccionIngles[z];
+									this.haTraducido = true;
+								}
+
+							}
+							break;
+						case "Aleman":
+							for (int z = 0; z < this.traduccionAleman.length && !this.haTraducido; z++) {
+								if (z==indice) {
+									this.traduccion = this.traduccionAleman[z];
+									this.haTraducido = true;
+								}
+
+							}
+							break;
+						case "Ruso":
+							for (int z = 0; z < this.traduccionRuso.length && !this.haTraducido; z++) {
+								if (z==indice) {
+									this.traduccion = this.traduccionRuso[z];
+									this.haTraducido = true;
+								}
+
+							}
+							break;
+						default:
+							
 						}
 					}
-				}else {
-					this.traduccion="salir";
 				}
-
 			}
+			
+			if(!palabraCorrecta||!idiomaCorrecto) {
+				this.traduccion="Error";
+			}
+		}else {
+			this.traduccion="salir";
 		}
+		palabraCorrecta=false;
+		idiomaCorrecto=false;
+		indice=0;
 		this.haTraducido=false;
 		return this.traduccion;
 	}

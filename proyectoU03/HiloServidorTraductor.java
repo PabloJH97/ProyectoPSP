@@ -46,7 +46,10 @@ public class HiloServidorTraductor extends Thread{
 					objeto.setIdiomaATraducir(d.getIdiomaATraducir());
 					objeto.traducir();
 					if(!objeto.getTraduccion().equals("salir")) {
-						objeto.insertarTraduccion();
+						if(!objeto.getTraduccion().equals("Error")) {
+							objeto.insertarTraduccion();
+						}
+
 						d.setPalabraTraducida(objeto.getTraduccion());
 						fsalida.writeObject(d);
 					}

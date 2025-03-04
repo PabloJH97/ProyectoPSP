@@ -36,25 +36,41 @@ public class Traductor {
 
 			if (!palabra.equals("salir")) {
 				boolean traducido=false;
-				datos.setPalabra(palabra);
-				boolean palabraCorrecta = true;
+				boolean palabraCorrecta = false;
+				boolean idiomaCorrecto = false;
 				for (int i=0; i<datos.getPalabrasTraducibles().length&&!traducido; i++) {
 					String palabraTraducible=datos.getPalabrasTraducibles()[i];
-					if (!palabra.equals(palabraTraducible)) {
-						palabraCorrecta = false;
+					if (palabra.equals(palabraTraducible)) {
+						palabraCorrecta = true;
 					}
-					if (palabraCorrecta) {
-						System.out.println("Escriba el idioma al que desea traducir la palabra :\n");
-						for (String idiomaTraducible : datos.getIdiomas()) {
-							System.out.println(idiomaTraducible);
-						}
+				}
+				if (palabraCorrecta) {
 
-						String idioma = sc.next();
+					System.out.println("Escriba el idioma al que desea traducir la palabra :\n");
+					for (String idiomaTraducible : datos.getIdiomas()) {
+						System.out.println(idiomaTraducible);
+					}
+
+					String idioma = sc.next();
+					
+					for(int j=0; j<datos.getIdiomas().length; j++) {
+						if(idioma.equals(datos.getIdiomas()[j])) {
+							idiomaCorrecto=true;
+						}
+					}
+					
+					if(idiomaCorrecto) {
+						datos.setPalabra(palabra);
 						datos.setIdiomaATraducir(idioma);
 						traducido=true;
-
 					}
+					
+					
 
+				}
+				if(!palabraCorrecta||!idiomaCorrecto) {
+					datos.setPalabra("error");
+					datos.setIdiomaATraducir("error");
 				}
 				fsalida.reset();
 				fsalida.writeObject(datos);
