@@ -31,6 +31,8 @@ public class HiloServidorTraductor extends Thread{
 			Datos datos= new Datos("Bienvenido al traductor", identificador);
 			try {
 				fsalida.reset();
+				datos.setPalabrasTraducibles(objeto.getPalabrasTraducibles());
+				datos.setIdiomas(objeto.getIdioma());
 				fsalida.writeObject(datos);
 			}catch(IOException e0) {
 				System.out.println("Error en el hilo servidor");
@@ -41,8 +43,14 @@ public class HiloServidorTraductor extends Thread{
 				try {
 					Datos d = (Datos) fentrada.readObject();
 					objeto.setPalabra(d.getPalabra());
-					objeto.setTraduccion(d.getPalabraTraducida());
-					objeto.insertarTraduccion();
+					objeto.setIdiomaATraducir(d.getIdiomaATraducir());
+					objeto.traducir();
+					if(!objeto.getTraduccion().equals("salir")) {
+						objeto.insertarTraduccion();
+						d.setPalabraTraducida(objeto.getTraduccion());
+						fsalida.writeObject(d);
+					}
+
 					if(d.isHaTerminado()) {
 						objeto.setHaTerminado(true);
 					}
